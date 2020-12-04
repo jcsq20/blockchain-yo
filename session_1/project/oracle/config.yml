@@ -1,0 +1,12 @@
+server:
+  address: "localhost"
+  port: 5555
+  peers:
+    #- address: "10.8.0.1"
+    #  port: 5555
+blockchain:
+  difficulty: 28
+  genesis: "51d5664ef15bbad7e4f2acd595faf5a213980b4c274becd440911516312ea9ec"
+  wallet:
+    priv: "fb34ced01f43547f98db000d1233e74298d68acf545a9cecc2fdf2ec7a6c2c03"
+    pub: "68fc76742406347377af7923e68ec877a89ad0c08079aeea65d933aa73309d48bccfdad8c100ff540c905cef8ec45ea3b940f4f4171def91d9ab218e6773c519"
