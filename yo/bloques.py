@@ -19,7 +19,7 @@ class Bloques:
         self.proofofwords()
 
     def proofofwords(self):
-        DificulBits_=10#20#32 se totea mi pc
+        DificulBits_=10#10#32 se totea mi pc
         yess_= True
         while yess_:
             nonce = abs(r.getrandbits(32))
@@ -55,17 +55,36 @@ class Bloques:
     def block_toJson(self):
         with open('./json/block.json', 'w') as file:json.dump(self.block_, file, indent=5)
     
-    def jsonToBlock(self):
-        pass
+    def jsonToBlock(self,data):
+        try:
+            record = json.loads(data)
+            for tra in record['transactions']:
+                self.obj_trans.nonce = tra['nonce']
+                self.obj_trans.src = tra['src']
+                self.obj_trans.dst = tra['dst']
+                self.obj_trans.amount = tra['amount']
+                self.obj_trans.signature = tra['signature']
+            self.nonce = record['header']['nonce']
+            self.time = record['header']['time']
+            self.prev_hash = record['header']['prevhash']
+            self.transactions = record['transactions']
+            self.hash_tx0 = self.get_hash_trans()
+            self.hash_header = self.get_hash_header()
+            return True
+        except Exception as e:
+            print(e)
+            return False
 
-# genesis='51d5664ef15bbad7e4f2acd595faf5a213980b4c274becd440911516312ea9ec'
-# dts = "68fc76742406347377af7923e68ec877a89ad0c08079aeea65d933aa73309d48bccfdad8c100ff540c905cef8ec45ea3b940f4f4171def91d9ab218e6773c519"
-# x = Bloques(genesis,"",dts)
-# print("Nonce: ",str(x.nonce))
-# print("Time: ",str(x.time))
-# print("prev-hash: ",str(x.prev_hash))
-# print("hash-trans: ",str(x.hash_tx0))
-# print("transaciones: ",str(x.transactions))
-# print("hash-header: ",str(x.hash_header))
-# print("block-: ",str(x.block_['header']))
-# x.block_toJson()
+
+
+genesis='51d5664ef15bbad7e4f2acd595faf5a213980b4c274becd440911516312ea9ec'
+dts = "68fc76742406347377af7923e68ec877a89ad0c08079aeea65d933aa73309d48bccfdad8c100ff540c905cef8ec45ea3b940f4f4171def91d9ab218e6773c519"
+x = Bloques(genesis,"",dts)
+print("Nonce: ",str(x.nonce))
+print("Time: ",str(x.time))
+print("prev-hash: ",str(x.prev_hash))
+print("hash-trans: ",str(x.hash_tx0))
+print("transaciones: ",str(x.transactions))
+print("hash-header: ",str(x.hash_header))
+print("block-: ",str(x.block_['header']))
+x.block_toJson()
