@@ -32,20 +32,20 @@ class Blockchain:
         self.bloks=[]
         self.bloks.append(self.blok)
         self.bandera= threading.Event()
-        #minero=threading.Thread(target= self.Miner, args=())
-        #minero.start()
-        #print("----------------GOOOO!!!-------------")
+        minero=threading.Thread(target= self.miner, args=())
+        minero.start()
+        print("----------------GOOOO!!!-------------")
     
     def get_last_blocks(self,lastknown:str):#preguntar
         blocks = []
-        #pass_=False
+        pass_=False
         for bl in self.bloks:
             bl:Bloques
-            if bl.hash_header == lastknown:
-                blocks.append(bl)
-            #     pass_=True
-            # if pass_:
-            #     blocks.append(bl)
+            if bl.prev_hash == lastknown:
+                blocks.append(bl.block_)
+                pass_=True
+            if pass_:
+                blocks.append(bl.block_)
         # loop blocks
         return blocks
 
@@ -56,7 +56,7 @@ class Blockchain:
         if add:
             self.bloks.append(block)
     
-    def minero(self):
+    def miner(self):
         yess_= True
         while yess_:
             self.bandera.set()
@@ -78,6 +78,6 @@ class Blockchain:
             self.peers.append(peer)
 
 
-a = Blockchain()
-a.append_block()
-a.blockchain_toJson()
+# a = Blockchain()
+# a.append_block()
+# a.blockchain_toJson()
